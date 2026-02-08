@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3E2723">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Brandenburg Garden Planner</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header class="header">
+        <div class="header__row-top">
+            <div class="header__logo">
+                <span class="header__icon">🪴</span>
+                <span class="header__title" data-i18n="title">Brandenburg Garden</span>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="en" title="English">EN</button>
+                <button class="lang-btn" data-lang="de" title="Deutsch">DE</button>
+                <button class="lang-btn" data-lang="ar" title="العربية">AR</button>
+            </div>
+        </div>
+        <div class="header__row-bottom">
+            <button class="header-btn" id="btnSettings" title="Settings">
+                <span class="header-btn__icon">⚙️</span>
+                <span class="header-btn__label" data-i18n="size">Size</span>
+            </button>
+            <button class="header-btn" id="btnCustom" title="Custom Marker">
+                <span class="header-btn__icon">✨</span>
+                <span class="header-btn__label" data-i18n="custom">Custom</span>
+            </button>
+            <button class="header-btn" id="btnExport" title="Export JPG">
+                <span class="header-btn__icon">📸</span>
+                <span class="header-btn__label" data-i18n="export">Export</span>
+            </button>
+            <button class="header-btn header-btn--save" id="btnSave" title="Save">
+                <span class="header-btn__icon">💾</span>
+                <span class="header-btn__label" data-i18n="save">Save</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Sidebar / Palette -->
+        <aside class="sidebar" id="sidebar">
+            <h2 class="sidebar__title">
+                <span>🎨</span>
+                <span data-i18n="palette">Plant Palette</span>
+            </h2>
+
+            <!-- Vegetables Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🥗</span>
+                    <span data-i18n="vegetables">Vegetables</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--red" draggable="true" data-type="tomato" data-icon="🍅" data-name="Tomatoes" data-name-de="Tomaten" data-name-ar="طماطم">
+                        <span class="palette-item__icon">🍅</span>
+                        <span class="palette-item__label" data-i18n="tomato">Tomato</span>
+                    </div>
+                    <div class="palette-item palette-item--orange" draggable="true" data-type="pepper" data-icon="🫑" data-name="Peppers" data-name-de="Paprika" data-name-ar="فلفل">
+                        <span class="palette-item__icon">🫑</span>
+                        <span class="palette-item__label" data-i18n="pepper">Pepper</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="cabbage" data-icon="🥬" data-name="Kale" data-name-de="Grünkohl" data-name-ar="كرنب">
+                        <span class="palette-item__icon">🥬</span>
+                        <span class="palette-item__label" data-i18n="kale">Kale</span>
+                    </div>
+                    <div class="palette-item palette-item--orange" draggable="true" data-type="carrot" data-icon="🥕" data-name="Carrots" data-name-de="Möhren" data-name-ar="جزر">
+                        <span class="palette-item__icon">🥕</span>
+                        <span class="palette-item__label" data-i18n="carrot">Carrot</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="squash" data-icon="🎃" data-name="Squash" data-name-de="Kürbis" data-name-ar="قرع">
+                        <span class="palette-item__icon">🎃</span>
+                        <span class="palette-item__label" data-i18n="squash">Squash</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="herbs" data-icon="🌿" data-name="Herbs" data-name-de="Kräuter" data-name-ar="أعشاب">
+                        <span class="palette-item__icon">🌿</span>
+                        <span class="palette-item__label" data-i18n="herbs">Herbs</span>
+                    </div>
+                    <div class="palette-item palette-item--tan" draggable="true" data-type="potato" data-icon="🥔" data-name="Potatoes" data-name-de="Kartoffeln" data-name-ar="بطاطا">
+                        <span class="palette-item__icon">🥔</span>
+                        <span class="palette-item__label" data-i18n="potato">Potato</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="cucumber" data-icon="🥒" data-name="Cucumber" data-name-de="Gurke" data-name-ar="خيار">
+                        <span class="palette-item__icon">🥒</span>
+                        <span class="palette-item__label" data-i18n="cucumber">Cucumber</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="zucchini" data-icon="🫛" data-name="Zucchini" data-name-de="Zucchini" data-name-ar="كوسا">
+                        <span class="palette-item__icon">🫛</span>
+                        <span class="palette-item__label" data-i18n="zucchini">Zucchini</span>
+                    </div>
+                    <div class="palette-item palette-item--red" draggable="true" data-type="beetroot" data-icon="🫒" data-name="Beetroot" data-name-de="Rote Bete" data-name-ar="شمندر">
+                        <span class="palette-item__icon">🫒</span>
+                        <span class="palette-item__label" data-i18n="beetroot">Beetroot</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="onion" data-icon="🧅" data-name="Onion" data-name-de="Zwiebel" data-name-ar="بصل">
+                        <span class="palette-item__icon">🧅</span>
+                        <span class="palette-item__label" data-i18n="onion">Onion</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="garlic" data-icon="🧄" data-name="Garlic" data-name-de="Knoblauch" data-name-ar="ثوم">
+                        <span class="palette-item__icon">🧄</span>
+                        <span class="palette-item__label" data-i18n="garlic">Garlic</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="lettuce" data-icon="🥗" data-name="Lettuce" data-name-de="Salat" data-name-ar="خس">
+                        <span class="palette-item__icon">🥗</span>
+                        <span class="palette-item__label" data-i18n="lettuce">Lettuce</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="peas" data-icon="🫘" data-name="Peas" data-name-de="Erbsen" data-name-ar="بازلاء">
+                        <span class="palette-item__icon">🫘</span>
+                        <span class="palette-item__label" data-i18n="peas">Peas</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="beans" data-icon="🌱" data-name="Beans" data-name-de="Bohnen" data-name-ar="فاصوليا">
+                        <span class="palette-item__icon">🌱</span>
+                        <span class="palette-item__label" data-i18n="beans">Beans</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="corn" data-icon="🌽" data-name="Corn" data-name-de="Mais" data-name-ar="ذرة">
+                        <span class="palette-item__icon">🌽</span>
+                        <span class="palette-item__label" data-i18n="corn">Corn</span>
+                    </div>
+                    <div class="palette-item palette-item--purple" draggable="true" data-type="radish" data-icon="🟣" data-name="Radish" data-name-de="Radieschen" data-name-ar="فجل">
+                        <span class="palette-item__icon">🟣</span>
+                        <span class="palette-item__label" data-i18n="radish">Radish</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="spinach" data-icon="🥦" data-name="Spinach" data-name-de="Spinat" data-name-ar="سبانخ">
+                        <span class="palette-item__icon">🥦</span>
+                        <span class="palette-item__label" data-i18n="spinach">Spinach</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="kohlrabi" data-icon="🟢" data-name="Kohlrabi" data-name-de="Kohlrabi" data-name-ar="كرنب ساقي">
+                        <span class="palette-item__icon">🟢</span>
+                        <span class="palette-item__label" data-i18n="kohlrabi">Kohlrabi</span>
+                    </div>
+                    <div class="palette-item palette-item--orange" draggable="true" data-type="rhubarb" data-icon="🌿" data-name="Rhubarb" data-name-de="Rhabarber" data-name-ar="راوند">
+                        <span class="palette-item__icon">🌿</span>
+                        <span class="palette-item__label" data-i18n="rhubarb">Rhubarb</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="leek" data-icon="🥬" data-name="Leek" data-name-de="Lauch" data-name-ar="كراث">
+                        <span class="palette-item__icon">🥬</span>
+                        <span class="palette-item__label" data-i18n="leek">Leek</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fruit Trees Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🍎</span>
+                    <span data-i18n="fruitTrees">Fruit Trees (RGO 4m²)</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--red" draggable="true" data-type="fruit-tree" data-icon="🍎" data-name="Apple (4m²)" data-name-de="Apfel (4m²)" data-name-ar="تفاح (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍎</span>
+                        <span class="palette-item__label" data-i18n="apple">Apple</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="fruit-tree" data-icon="🍐" data-name="Pear (4m²)" data-name-de="Birne (4m²)" data-name-ar="كمثرى (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍐</span>
+                        <span class="palette-item__label" data-i18n="pear">Pear</span>
+                    </div>
+                    <div class="palette-item palette-item--red" draggable="true" data-type="fruit-tree" data-icon="🍒" data-name="Cherry (4m²)" data-name-de="Kirsche (4m²)" data-name-ar="كرز (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍒</span>
+                        <span class="palette-item__label" data-i18n="cherry">Cherry</span>
+                    </div>
+                    <div class="palette-item palette-item--purple" draggable="true" data-type="fruit-tree" data-icon="🍑" data-name="Plum (4m²)" data-name-de="Pflaume (4m²)" data-name-ar="برقوق (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍑</span>
+                        <span class="palette-item__label" data-i18n="plum">Plum</span>
+                    </div>
+                    <div class="palette-item palette-item--orange" draggable="true" data-type="fruit-tree" data-icon="🍊" data-name="Apricot (4m²)" data-name-de="Aprikose (4m²)" data-name-ar="مشمش (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍊</span>
+                        <span class="palette-item__label" data-i18n="apricot">Apricot</span>
+                    </div>
+                    <div class="palette-item palette-item--red" draggable="true" data-type="fruit-tree" data-icon="🫐" data-name="Sour Cherry (4m²)" data-name-de="Sauerkirsche (4m²)" data-name-ar="كرز حامض (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🫐</span>
+                        <span class="palette-item__label" data-i18n="sourCherry">S.Cherry</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="fruit-tree" data-icon="🍋" data-name="Quince (4m²)" data-name-de="Quitte (4m²)" data-name-ar="سفرجل (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍋</span>
+                        <span class="palette-item__label" data-i18n="quince">Quince</span>
+                    </div>
+                    <div class="palette-item palette-item--purple" draggable="true" data-type="fruit-tree" data-icon="🍇" data-name="Mirabelle (4m²)" data-name-de="Mirabelle (4m²)" data-name-ar="مشمش أصفر (4م²)" data-tree-type="halb">
+                        <span class="palette-item__icon">🍇</span>
+                        <span class="palette-item__label" data-i18n="mirabelle">Mirabelle</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Berry Bushes Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🍓</span>
+                    <span data-i18n="berries">Berry Bushes (1.5m²)</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--pink" draggable="true" data-type="berry" data-icon="🍓" data-name="Strawberry" data-name-de="Erdbeere" data-name-ar="فراولة">
+                        <span class="palette-item__icon">🍓</span>
+                        <span class="palette-item__label" data-i18n="strawberry">Strawberry</span>
+                    </div>
+                    <div class="palette-item palette-item--red" draggable="true" data-type="berry" data-icon="🫐" data-name="Raspberry" data-name-de="Himbeere" data-name-ar="توت">
+                        <span class="palette-item__icon">🫐</span>
+                        <span class="palette-item__label" data-i18n="raspberry">Raspberry</span>
+                    </div>
+                    <div class="palette-item palette-item--purple" draggable="true" data-type="berry" data-icon="🍇" data-name="Currant" data-name-de="Johannisbeere" data-name-ar="كشمش">
+                        <span class="palette-item__icon">🍇</span>
+                        <span class="palette-item__label" data-i18n="currant">Currant</span>
+                    </div>
+                    <div class="palette-item palette-item--green" draggable="true" data-type="berry" data-icon="🥝" data-name="Gooseberry" data-name-de="Stachelbeere" data-name-ar="عنب الثعلب">
+                        <span class="palette-item__icon">🥝</span>
+                        <span class="palette-item__label" data-i18n="gooseberry">Gooseberry</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Decorative Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🌳</span>
+                    <span data-i18n="decorative">Decorative (NO credit!)</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--gray" draggable="true" data-type="deco-tree" data-icon="🌳" data-name="Deciduous Tree" data-name-de="Laubbaum" data-name-ar="شجرة نفضية">
+                        <span class="palette-item__icon">🌳</span>
+                        <span class="palette-item__label" data-i18n="tree">Tree 0m²</span>
+                    </div>
+                    <div class="palette-item palette-item--gray" draggable="true" data-type="deco-tree" data-icon="🌲" data-name="Conifer ⚠️REMOVE" data-name-de="Nadelbaum ⚠️ENTFERNEN" data-name-ar="صنوبر ⚠️إزالة">
+                        <span class="palette-item__icon">🌲</span>
+                        <span class="palette-item__label">Conifer⚠️</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="deco-tree" data-icon="🎋" data-name="Decorative" data-name-de="Ziergehölz" data-name-ar="زينة">
+                        <span class="palette-item__icon">🎋</span>
+                        <span class="palette-item__label" data-i18n="deco">Deco 0m²</span>
+                    </div>
+                    <div class="palette-item palette-item--darkbrown" draggable="true" data-type="big-tree" data-icon="🌴" data-name="Big Old Tree" data-name-de="Großer Altbaum" data-name-ar="شجرة كبيرة قديمة">
+                        <span class="palette-item__icon">🌴</span>
+                        <span class="palette-item__label" data-i18n="bigTree">Big Tree</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Structures Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🏡</span>
+                    <span data-i18n="structures">Structures</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--gray" draggable="true" data-type="house" data-icon="🏠" data-name="House" data-name-de="Laube" data-name-ar="بيت">
+                        <span class="palette-item__icon">🏠</span>
+                        <span class="palette-item__label" data-i18n="house">House</span>
+                    </div>
+                    <div class="palette-item palette-item--brown" draggable="true" data-type="shed" data-icon="🏚️" data-name="Shed" data-name-de="Schuppen" data-name-ar="كوخ">
+                        <span class="palette-item__icon">🏚️</span>
+                        <span class="palette-item__label" data-i18n="shed">Shed</span>
+                    </div>
+                    <div class="palette-item palette-item--brown" draggable="true" data-type="compost" data-icon="🪣" data-name="Compost" data-name-de="Kompost" data-name-ar="سماد">
+                        <span class="palette-item__icon">🪣</span>
+                        <span class="palette-item__label" data-i18n="compost">Compost</span>
+                    </div>
+                    <div class="palette-item palette-item--tan" draggable="true" data-type="path" data-icon="🛤️" data-name="Path" data-name-de="Weg" data-name-ar="ممر">
+                        <span class="palette-item__icon">🛤️</span>
+                        <span class="palette-item__label" data-i18n="path">Path</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Land & Water Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>🌊</span>
+                    <span data-i18n="landWater">Land & Water</span>
+                </h3>
+                <div class="palette-items">
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="grass" data-icon="🌿" data-name="Grass" data-name-de="Rasen" data-name-ar="عشب">
+                        <span class="palette-item__icon">🌿</span>
+                        <span class="palette-item__label" data-i18n="grass">Grass</span>
+                    </div>
+                    <div class="palette-item palette-item--blue" draggable="true" data-type="pond" data-icon="🐸" data-name="Pond" data-name-de="Teich" data-name-ar="بركة">
+                        <span class="palette-item__icon">🐸</span>
+                        <span class="palette-item__label" data-i18n="pond">Pond</span>
+                    </div>
+                    <div class="palette-item palette-item--blue" draggable="true" data-type="water" data-icon="🚿" data-name="Water Tap" data-name-de="Wasserhahn" data-name-ar="صنبور">
+                        <span class="palette-item__icon">🚿</span>
+                        <span class="palette-item__label" data-i18n="water">Water</span>
+                    </div>
+                    <div class="palette-item palette-item--brown" draggable="true" data-type="nettle" data-icon="🌾" data-name="Nettles" data-name-de="Brennnesseln" data-name-ar="قراص">
+                        <span class="palette-item__icon">🌾</span>
+                        <span class="palette-item__label" data-i18n="nettle">Nettle</span>
+                    </div>
+                    <div class="palette-item palette-item--lime" draggable="true" data-type="weeds" data-icon="☘️" data-name="Weeds" data-name-de="Unkraut" data-name-ar="أعشاب ضارة">
+                        <span class="palette-item__icon">☘️</span>
+                        <span class="palette-item__label" data-i18n="weeds">Weeds</span>
+                    </div>
+                    <div class="palette-item palette-item--yellow" draggable="true" data-type="entrance" data-icon="🚪" data-name="Entrance" data-name-de="Eingang" data-name-ar="مدخل">
+                        <span class="palette-item__icon">🚪</span>
+                        <span class="palette-item__label" data-i18n="entrance">Entry</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Custom Section -->
+            <section class="palette-section">
+                <h3 class="palette-section__title">
+                    <span>⭐</span>
+                    <span data-i18n="customSection">Custom</span>
+                </h3>
+                <div class="palette-items" id="customPalette"></div>
+                <button class="btn btn--warning btn--full" id="btnCreateCustom">
+                    <span>✨</span>
+                    <span data-i18n="create">Create</span>
+                </button>
+            </section>
+
+            <!-- Stats Panel -->
+            <section class="stats-panel">
+                <h3 class="stats-panel__title">
+                    <span>📊</span>
+                    <span data-i18n="rgoRule">RGO 1/3 Rule</span>
+                </h3>
+                <div class="stats-panel__content">
+                    <div class="stat-row">
+                        <span data-i18n="gardenTotal">Garden Total:</span>
+                        <span class="stat-value" id="gardenTotal">625 m²</span>
+                    </div>
+                    <div class="stat-row">
+                        <span data-i18n="required">Required (⅓):</span>
+                        <span class="stat-value" id="gardenRequired">208 m²</span>
+                    </div>
+                    <hr class="stat-divider">
+                    <div class="stat-row">
+                        <span>🍎 <span data-i18n="fruitTreesLabel">Fruit Trees:</span></span>
+                        <span class="stat-value" id="fruitTreeArea">0 m²</span>
+                    </div>
+                    <div class="stat-row stat-row--sub">
+                        <span>└ <span data-i18n="maxCap">Max 35% cap:</span></span>
+                        <span id="treeMax">73 m²</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>🍓 <span data-i18n="berryLabel">Berry Bushes:</span></span>
+                        <span class="stat-value" id="berryArea">0 m²</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>🥬 <span data-i18n="vegLabel">Vegetables:</span></span>
+                        <span class="stat-value" id="vegArea">0 m²</span>
+                    </div>
+                    <hr class="stat-divider stat-divider--strong">
+                    <div class="stat-row stat-row--total">
+                        <span>✅ <span data-i18n="totalCredit">Total Credit:</span></span>
+                        <span class="stat-value" id="totalCredit">0 m²</span>
+                    </div>
+                    <div class="compliance-bar">
+                        <div class="compliance-bar__header">
+                            <span data-i18n="progress">Progress</span>
+                            <span class="compliance-bar__percent" id="compliancePercent">0%</span>
+                        </div>
+                        <div class="compliance-bar__track">
+                            <div class="compliance-bar__fill" id="complianceFill"></div>
+                            <div class="compliance-bar__target"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Aerial Controls -->
+            <section class="aerial-controls">
+                <h3 class="aerial-controls__title">
+                    <span>📸</span>
+                    <span data-i18n="aerialOverlay">Aerial Overlay</span>
+                </h3>
+                <input type="file" id="aerialInput" accept="image/*" hidden>
+                <div class="aerial-preview" id="aerialPreview" data-i18n="noPhoto">No photo loaded</div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <span data-i18n="opacity">Opacity:</span>
+                        <span id="opacityValue">50%</span>
+                    </label>
+                    <input type="range" class="form-range" id="aerialOpacity" min="0" max="100" value="50">
+                </div>
+                <div class="aerial-controls__actions">
+                    <button class="btn btn--aerial" id="btnLoadPhoto">
+                        <span>📷</span>
+                        <span data-i18n="loadPhoto">Load</span>
+                    </button>
+                    <button class="btn btn--secondary" id="btnClearPhoto">
+                        <span>🗑️</span>
+                        <span data-i18n="clear">Clear</span>
+                    </button>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Canvas Area -->
+        <section class="canvas-area">
+            <div class="toolbar">
+                <span class="toolbar__dimensions">
+                    <strong id="gardenDimensions">25m × 25m</strong>
+                </span>
+                <button class="tool-btn" id="toolDuplicate" title="Duplicate"><span class="tool-btn__icon">📋</span><span class="tool-btn__label" data-i18n="duplicate">Copy</span></button>
+                <button class="tool-btn" id="toolDelete" title="Delete"><span class="tool-btn__icon">🗑️</span><span class="tool-btn__label" data-i18n="delete">Delete</span></button>
+                <button class="tool-btn" id="toolFront" title="Bring to Front"><span class="tool-btn__icon">⬆️</span><span class="tool-btn__label" data-i18n="bringUp">Up</span></button>
+                <button class="tool-btn" id="toolBack" title="Send to Back"><span class="tool-btn__icon">⬇️</span><span class="tool-btn__label" data-i18n="sendDown">Down</span></button>
+                <div class="toolbar__right">
+                    <div class="zoom-controls">
+                        <button class="tool-btn" id="zoomOut">−</button>
+                        <span class="zoom-controls__level" id="zoomLevel">100%</span>
+                        <button class="tool-btn" id="zoomIn">+</button>
+                    </div>
+                    <label class="toolbar__grid-toggle">
+                        <input type="checkbox" id="gridToggle" checked>
+                        <span data-i18n="grid">Grid</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="garden-wrapper" id="gardenWrapper">
+                <div class="garden-wrapper-inner" id="gardenWrapperInner">
+                    <div class="garden-grid show-grid" id="gardenGrid">
+                        <div class="aerial-overlay" id="aerialOverlay"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Editor Panel -->
+        <aside class="editor-panel" id="editorPanel">
+            <h2 class="editor-panel__title">
+                <span>✏️</span>
+                <span data-i18n="editZone">Edit Zone</span>
+            </h2>
+            <div class="form-group">
+                <label class="form-label" data-i18n="icon">Icon</label>
+                <div class="icon-preview" id="zoneIconPreview">🌱</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="name">Name</label>
+                <input type="text" class="form-input" id="zoneName">
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="positionCells">Position (cells)</label>
+                <div class="form-row">
+                    <input type="number" class="form-input" id="zoneX" min="0">
+                    <input type="number" class="form-input" id="zoneY" min="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="sizeCells">Size (cells)</label>
+                <div class="form-row">
+                    <input type="number" class="form-input" id="zoneWidth" min="1">
+                    <input type="number" class="form-input" id="zoneHeight" min="1">
+                </div>
+            </div>
+            <div class="form-group" id="treeTypeGroup" hidden>
+                <label class="form-label" data-i18n="treeType">Tree Type (RGO)</label>
+                <select class="form-select" id="zoneTreeType">
+                    <option value="hoch">Hochstamm (8 m²)</option>
+                    <option value="halb">Halbstamm (4 m²)</option>
+                    <option value="nieder">Niederstamm (1.5 m²)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="notes">Notes</label>
+                <textarea class="form-textarea" id="zoneNotes" rows="2"></textarea>
+            </div>
+            <div class="editor-panel__actions">
+                <button class="btn btn--primary" id="btnUpdateZone">
+                    <span>✅</span>
+                    <span data-i18n="update">Update</span>
+                </button>
+                <button class="btn btn--danger" id="btnDeleteZone">
+                    <span>🗑️</span>
+                    <span data-i18n="delete">Delete</span>
+                </button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Sidebar Toggle (Mobile) -->
+    <button class="sidebar-toggle" id="sidebarToggle"><span>🌿</span><span class="sidebar-toggle__label" data-i18n="addPlant">Add Plant</span></button>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <button class="context-menu__item" id="ctxEdit">
+            <span>✏️</span>
+            <span data-i18n="edit">Edit</span>
+        </button>
+        <button class="context-menu__item" id="ctxDuplicate">
+            <span>📋</span>
+            <span data-i18n="duplicate">Duplicate</span>
+        </button>
+        <button class="context-menu__item context-menu__item--danger" id="ctxDelete">
+            <span>🗑️</span>
+            <span data-i18n="delete">Delete</span>
+        </button>
+    </div>
+
+    <!-- Floating Zone Actions (Mobile) -->
+    <div class="zone-actions-float" id="zoneActionsFloat">
+        <button class="btn btn--primary" id="floatEdit">✏️ <span data-i18n="edit">Edit</span></button>
+        <button class="btn btn--secondary" id="floatDuplicate">📋 <span data-i18n="duplicate">Copy</span></button>
+        <button class="btn btn--danger" id="floatDelete">🗑️ <span data-i18n="delete">Delete</span></button>
+        <button class="btn btn--secondary" id="floatCancel">✕</button>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Icon Picker Modal -->
+    <div class="modal-overlay" id="iconModal">
+        <div class="modal">
+            <h2 class="modal__title">
+                <span>🎨</span>
+                <span data-i18n="pickIcon">Pick Icon</span>
+            </h2>
+            <div class="icon-grid" id="iconGrid"></div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" id="btnCancelIcon">
+                    <span data-i18n="cancel">Cancel</span>
+                </button>
+                <button class="btn btn--primary" id="btnSelectIcon">
+                    <span>✅</span>
+                    <span data-i18n="select">Select</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Marker Modal -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal">
+            <h2 class="modal__title">
+                <span>✨</span>
+                <span data-i18n="customMarker">Custom Marker</span>
+            </h2>
+            <div class="form-group">
+                <label class="form-label" data-i18n="name">Name</label>
+                <input type="text" class="form-input" id="customName" placeholder="e.g., Raspberry">
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="icon">Icon</label>
+                <div class="icon-preview" id="customIconPreview">⭐</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="color">Color</label>
+                <div class="color-picker" id="colorPicker"></div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="category">Category (1/3 Rule)</label>
+                <select class="form-select" id="customCategory">
+                    <option value="structure" data-i18n="catStructure">🏠 Structure (0 credit)</option>
+                    <option value="vegetable" data-i18n="catVegetable">🥬 Vegetable (area)</option>
+                    <option value="berry" data-i18n="catBerry">🍓 Berry (1.5 m²)</option>
+                    <option value="fruit-tree" data-i18n="catFruitTree">🍎 Fruit Tree (4 m²)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="sizeCells">Size (cells)</label>
+                <div class="form-row">
+                    <input type="number" class="form-input" id="customWidth" value="2" min="1">
+                    <input type="number" class="form-input" id="customHeight" value="2" min="1">
+                </div>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" id="btnCancelCustom">
+                    <span data-i18n="cancel">Cancel</span>
+                </button>
+                <button class="btn btn--primary" id="btnCreateCustomMarker">
+                    <span>✨</span>
+                    <span data-i18n="create">Create</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <h2 class="modal__title">
+                <span>⚙️</span>
+                <span data-i18n="gardenSettings">Garden Settings</span>
+            </h2>
+            <div class="form-group">
+                <label class="form-label" data-i18n="gardenWidth">Garden Width (meters)</label>
+                <input type="number" class="form-input" id="settingsWidth" value="25" min="5" max="100" step="1">
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="gardenHeight">Garden Height (meters)</label>
+                <input type="number" class="form-input" id="settingsHeight" value="25" min="5" max="100" step="1">
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="cellSize">Cell Size</label>
+                <select class="form-select" id="settingsCellSize">
+                    <option value="0.5" data-i18n="cellDetailed">0.5 meters (detailed)</option>
+                    <option value="1" data-i18n="cellSimple">1 meter (simple)</option>
+                </select>
+            </div>
+            <p class="modal__warning">
+                ⚠️ <span data-i18n="sizeWarning">Changing size will clear current layout. Export first!</span><br>
+                <span data-i18n="current">Current:</span> <span id="currentSizeDisplay">25m × 25m = 625 m²</span>
+            </p>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" id="btnCancelSettings">
+                    <span data-i18n="cancel">Cancel</span>
+                </button>
+                <button class="btn btn--primary" id="btnApplySettings">
+                    <span>✅</span>
+                    <span data-i18n="apply">Apply</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div class="modal-overlay" id="onboardingModal">
+        <div class="modal">
+            <h2 class="modal__title">
+                <span>🪴</span>
+                <span data-i18n="welcome">Welcome to Brandenburg Garden Planner!</span>
+            </h2>
+            <p class="onboarding__desc" data-i18n="welcomeDesc">Set your garden size to get started. You can change this later in Settings.</p>
+            <div class="form-group">
+                <label class="form-label" data-i18n="gardenWidth">Garden Width (meters)</label>
+                <input type="number" class="form-input" id="onboardWidth" value="25" min="5" max="100" step="1">
+            </div>
+            <div class="form-group">
+                <label class="form-label" data-i18n="gardenHeight">Garden Height (meters)</label>
+                <input type="number" class="form-input" id="onboardHeight" value="25" min="5" max="100" step="1">
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--primary btn--full" id="btnOnboardStart">
+                    <span>🌱</span>
+                    <span data-i18n="start">Start Planning</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
