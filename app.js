@@ -1950,17 +1950,28 @@ function setupEvents() {
     const grid = $('#gardenGrid');
     grid.addEventListener('dragover', e => e.preventDefault());
     grid.addEventListener('drop', handleDrop);
-    grid.addEventListener('click', e => {
-        if (e.target.classList.contains('grid-cell')) {
-            deselectAll();
-        }
-    });
     grid.addEventListener('contextmenu', handleContext);
 
-    // Global events
+    // Global events — deselect when clicking outside zones/float bar
     document.addEventListener('click', e => {
         if (!e.target.closest('.context-menu')) {
             hideContext();
+        }
+        if (App.selectedZone &&
+            !e.target.closest('.placed-zone') &&
+            !e.target.closest('.zone-actions-float') &&
+            !e.target.closest('.editor-panel') &&
+            !e.target.closest('.toolbar')) {
+            deselectAll();
+        }
+        // Close sidebar when tapping outside it and its toggle
+        const sidebar = $('#sidebar');
+        if (sidebar.classList.contains('open') &&
+            !e.target.closest('.sidebar') &&
+            !e.target.closest('.sidebar-toggle')) {
+            sidebar.classList.remove('open');
+            const btn = $('#sidebarToggle');
+            btn.innerHTML = `<span>🌿</span><span class="sidebar-toggle__label" data-i18n="addPlant">${esc(t('addPlant'))}</span>`;
         }
     });
 
